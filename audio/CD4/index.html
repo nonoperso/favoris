@@ -44,7 +44,7 @@ AudioHandler.prototype.play = function(trackElement)
   if (!trackElement || trackElement.tagName.toLowerCase() != 'li') return;  
   this.trackElement = trackElement;
   
-  this.audioElement.src = '/music-folder-perso2/audio/CD4/' + this.toEscapedASCII(trackElement.textContent) + '.mp3';
+  this.audioElement.src = 'https://nonoperso.github.io/favoris/audio/CD4/' + this.toEscapedASCII(trackElement.textContent) + '.mp3';
   this.audioElement.play();
            
   var lis = document.getElementsByTagName('li');
