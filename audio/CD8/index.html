@@ -1,0 +1,112 @@
+<html lang="fr">
+<head>
+<title>CD de Mathis - Curtis Nowosad - If I had (A Hammer)</title>
+<script type="text/javascript">
+//<![CDATA[
+
+(function(){
+    
+// audioElement = HTML5 Audio    
+AudioHandler = function(audioElement)
+{
+  this.trackElement = undefined;
+  this.audioElement = audioElement;
+  
+  var self = this;
+  
+  // click on track to play
+  document.addEventListener
+  (
+      'click', 
+       function(evt) 
+       { 
+           self.play(evt.target);           
+       }, 
+       false 
+  );
+  
+  // play next track when current ends
+  this.audioElement.addEventListener
+  (
+      'ended', 
+      function() 
+      { 
+          self.play(self.trackElement.nextElementSibling);  
+      }, 
+      true
+  );
+    
+};
+
+// trackElement = list item with track name
+AudioHandler.prototype.play = function(trackElement)
+{
+  if (!trackElement || trackElement.tagName.toLowerCase() != 'li') return;  
+  this.trackElement = trackElement;
+  
+  this.audioElement.src = '/music-folder-perso2/audio/CD8/' + this.toEscapedASCII(trackElement.textContent) + '.mp3';
+  this.audioElement.play();
+           
+  var lis = document.getElementsByTagName('li');
+  
+  for (var i = 0, l = lis.length ; i < l ; i++)
+  {
+          lis[i].className = '';
+  }
+           
+  trackElement.className = 'playing';            
+};
+
+// converted listed title with fancy characters to simple
+AudioHandler.prototype.toEscapedASCII = function(str)
+{
+    var arr = [];
+    
+    for (var c = '', i = 0, l = str.length ; i < l ; i++)
+    {
+        c = str.charAt(i);
+        
+        switch (c)
+        {
+            case 'Ø': arr.push('O'); break;
+            case 'ö': arr.push('o'); break;
+            case '#': arr.push('%23'); break;
+            default:  arr.push(c); break;
+        }
+    }
+
+    return arr.join('');
+};
+
+// initialize when ready
+window.onload = function() 
+{ 
+    new AudioHandler(document.getElementsByTagName('audio')[0]);    
+}
+
+})();
+// ]]>
+</script>
+<style type="text/css">
+ul { -webkit-column-count:2;-moz-column-count:2;column-count:2; }
+li:hover { text-decoration: underline; }
+li.playing { font-weight: bold; }
+</style>
+</head>
+<body>
+<h1>CD de Mathis - Curtis Nowosad - If I had (A Hammer)</h1>
+<img src="CD8.jpg" />
+<hr/>
+<audio controls="controls" 
+ onerror="alert('Could not play MP3 audio file ' + this.src + '!');">
+HTML5 MP3 audio required 
+</audio>
+
+<ul>
+<li>01_Road</li>
+<li>02_If_I_Had (The_Hammer_Song)</li>
+<li>03_By_the_Time_I_Get_to_Phoenix</li>
+<li>04_Heaven_Is_10_Zillion_Light_Years_Away</li>
+</ul>
+</body>
+</html>
