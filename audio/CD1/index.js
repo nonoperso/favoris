@@ -28,7 +28,7 @@ var aud = {
   play : id => {
     // (B1) UPDATE AUDIO SRC
     aud.now = id;
-    aud.player.src = "" + aud.playlist[id].dataset.src;
+    aud.player.src = "https://nonoperso.github.io/favoris/audio/CD1/" + aud.playlist[id].dataset.src;
 
     // (B2) A LITTLE BIT OF COSMETIC
     for (let i=0; i<aud.playlist.length; i++) {
