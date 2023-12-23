@@ -12,11 +12,11 @@ loginButton.addEventListener("click", (e) => {
 
     if (username == "GODAILLE" && PWD == "GODERIG") {
         // If the credentials are valid, show an alert box and reload the page
-        // alert("Identification correcte, l'accès est libre");
+        
         window.location.href="selection.html";
     } else {
         // Otherwise, make the login error message show (change its oppacity)
-        // loginErrorMsg.style.opacity = 1;
+
         alert("Identifiants incorrects, Réessayer ?");
     }
 })
