@@ -1,0 +1,118 @@
+<html lang="fr">
+<head>
+
+<script type="text/javascript">
+//<![CDATA[
+
+(function(){
+    
+// audioElement = HTML5 Audio    
+AudioHandler = function(audioElement)
+{
+  this.trackElement = undefined;
+  this.audioElement = audioElement;
+  
+  var self = this;
+  
+  // click on track to play
+  document.addEventListener
+  (
+      'click', 
+       function(evt) 
+       { 
+           self.play(evt.target);           
+       }, 
+       false 
+  );
+  
+  // play next track when current ends
+  this.audioElement.addEventListener
+  (
+      'ended', 
+      function() 
+      { 
+          self.play(self.trackElement.nextElementSibling);  
+      }, 
+      true
+  );
+    
+};
+
+// trackElement = list item with track name
+AudioHandler.prototype.play = function(trackElement)
+{
+  if (!trackElement || trackElement.tagName.toLowerCase() != 'li') return;  
+  this.trackElement = trackElement;
+  
+  this.audioElement.src = this.toEscapedASCII(trackElement.textContent) + '.mp3';
+  this.audioElement.play();
+           
+  var lis = document.getElementsByTagName('li');
+  
+  for (var i = 0, l = lis.length ; i < l ; i++)
+  {
+          lis[i].className = '';
+  }
+           
+  trackElement.className = 'playing';            
+};
+
+// converted listed title with fancy characters to simple
+AudioHandler.prototype.toEscapedASCII = function(str)
+{
+    var arr = [];
+    
+    for (var c = '', i = 0, l = str.length ; i < l ; i++)
+    {
+        c = str.charAt(i);
+        
+        switch (c)
+        {
+            case 'Ø': arr.push('O'); break;
+            case 'ö': arr.push('o'); break;
+            case '#': arr.push('%23'); break;
+            default:  arr.push(c); break;
+        }
+    }
+
+    return arr.join('');
+};
+
+// initialize when ready
+window.onload = function() 
+{ 
+    new AudioHandler(document.getElementsByTagName('audio')[0]);    
+}
+
+})();
+// ]]>
+</script>
+<style type="text/css">
+ul { -webkit-column-count:2;-moz-column-count:2;column-count:2; }
+li:hover { text-decoration: underline; }
+li.playing { font-weight: bold; }
+</style>
+</head>
+<body>
+<center> <img src="CD1.jpg"> </center>
+<hr/>
+<audio controls="controls" 
+ onerror="alert('Could not play MP3 audio file ' + this.src + '!');">
+HTML5 MP3 audio required 
+</audio>
+
+<ul>
+<li>1_03_Les_vacances_au_bord_de_la_mer</li>
+<li>1_08_Le_bolero</li>
+<li>1_10_En_vla_du_slow_en_vla</li>
+<li>1_11_Triste_et_bleu</li>
+<li>1_12_La_chanson_du_compositeur</li>
+<li>1_13_Le_lac_gele</li>
+<li>1_14_Taj_Mahal</li>
+<li>2_04_La_boîte_de_jazz</li>
+<li>2_05_La_vie_sans_mort</li>
+<li>2_07_Adam_et_Eve</li>
+<li>2_08_C-est_ca_le_blues</li>
+</ul>
+</body>
+</html>
